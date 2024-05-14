@@ -21,11 +21,15 @@ import { Select, SelectContent, SelectItem, SelectTrigger } from "./ui/select";
 import { SelectValue } from "@radix-ui/react-select";
 import { Textarea } from "./ui/textarea";
 import { Wand2 } from "lucide-react";
-
+import CompanionId from "@/app/(root)/(routes)/companion/[companionId]/page";
+import axios from "axios";
+import { useToast } from "./ui/use-toast";
+import { useRouter } from "next/navigation";
 interface CompanionFormProps {
   initialData: Companion | null;
   categories: Category[];
 }
+
 const formSchema = z.object({
   name: z.string().min(1, {
     message: "Name is required",
@@ -51,20 +55,46 @@ export default function CompanionForm({
   initialData,
   categories,
 }: CompanionFormProps) {
+  const router = useRouter();
+  const {toast}= useToast();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: "",
-      description: "",
-      instructions: "",
-      seed: "",
-      src: "",
-      categoryId: undefined,
+      name: initialData?.name|| "",
+      description: initialData?.description||"",
+      instructions:initialData?.instructions|| "",
+      seed:initialData?.seed|| "",
+      src: initialData?.src||"",
+      categoryId:initialData?.categoryId|| undefined,
     },
   });
   const isLoading = form.formState.isSubmitting;
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    try{
+ 
+if(initialData)
+  {
+ 
+    await axios.patch(`/api/companion/${initialData.id}`,values)
+  }else{
+    //create
+    await axios.post("/api/companion",values);
+  }
+  toast({
+    description:"Success"
+  })
+  router.refresh();
+  router.push("/")
+
+    }
+    catch(error)
+    {
+      toast({
+        variant:"destructive",
+        description:"Something went Wrong"
+      })
+    }
     console.log(values);
   }
   const PREAMBLE =
