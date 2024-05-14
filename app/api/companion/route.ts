@@ -11,6 +11,7 @@ const {src,name, description, instructions,seed,categoryId}=body;
 if(!user||!user.id||!user.firstName){
     return new NextResponse("Unauthorized", {status:401});
 }
+
 if(!src||!name||!description||!instructions||!seed)
     {
         return new NextResponse("Missing required fields", {status:400})

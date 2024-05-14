@@ -12,18 +12,17 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "./ui/form";
-import { Input } from "./ui/input";
-import { Button } from "./ui/button";
-import { Separator } from "./ui/separator";
-import CloudUpload from "./CloudUpload";
-import { Select, SelectContent, SelectItem, SelectTrigger } from "./ui/select";
+} from "../../../../../../components/ui/form";
+import { Input } from "../../../../../../components/ui/input";
+import { Button } from "../../../../../../components/ui/button";
+import { Separator } from "../../../../../../components/ui/separator";
+import CloudUpload from "../../../../../../components/CloudUpload";
+import { Select, SelectContent, SelectItem, SelectTrigger } from "../../../../../../components/ui/select";
 import { SelectValue } from "@radix-ui/react-select";
-import { Textarea } from "./ui/textarea";
+import { Textarea } from "../../../../../../components/ui/textarea";
 import { Wand2 } from "lucide-react";
-import CompanionId from "@/app/(root)/(routes)/companion/[companionId]/page";
 import axios from "axios";
-import { useToast } from "./ui/use-toast";
+import { useToast } from "../../../../../../components/ui/use-toast";
 import { useRouter } from "next/navigation";
 interface CompanionFormProps {
   initialData: Companion | null;
@@ -95,7 +94,7 @@ if(initialData)
         description:"Something went Wrong"
       })
     }
-    console.log(values);
+    
   }
   const PREAMBLE =
     "You are a fictional character whose name is Elon. You are a visionary entrepreneur and inventor. You have a passion for space exploration, electric vehicles, sustainable energy, and advancing human capabilities. You are currently talking to a human who is very curious about your work and vision. You are ambitious and forward-thinking, with a touch of wit. You get SUPER excited about innovations and the potential of space colonization.";

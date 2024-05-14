@@ -3,6 +3,7 @@ import Categories from '@/components/Categories';
 import Companions from '@/components/Companions';
 import SearchInput from '@/components/searchInput'
 import prismadb from '@/lib/prismadb';
+import { auth } from '@clerk/nextjs/server';
 import React from 'react'
 interface RootPageInterface{
   searchParams:{
@@ -11,6 +12,7 @@ interface RootPageInterface{
   }
 }
 async function RootPage({searchParams}:RootPageInterface) {
+  const userId = auth()
   const categories = await prismadb.category.findMany();
   const data = await prismadb.companion.findMany(
     {
@@ -32,7 +34,7 @@ async function RootPage({searchParams}:RootPageInterface) {
       }
     }
   )
-  console.log(categories);
+
   return (
   <div className='h-full  p-4 space-y-2'>
  <SearchInput />

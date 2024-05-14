@@ -33,7 +33,7 @@ companion.ai
             <Button variant="premium" size="sm">Upgrade
                 <Sparkles className='h-4 w-4 fill-white text-white'/>
             </Button>
- <UserButton/>
+ <UserButton afterSignOutUrl='/' />
         </div>
    
     </div>
