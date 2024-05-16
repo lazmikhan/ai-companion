@@ -51,7 +51,7 @@ toast({
     <ChevronLeft className='w-8 h-8'/>
   </Button>
 
-<BotAvatar companion={companion}/>
+<BotAvatar src={companion.src}/>
 <div className='flex flex-col gap-y-1'>
 <div className='flex items-center gap-x-2'>
 <p className='text-lg font-bold '>{companion.name}</p>
