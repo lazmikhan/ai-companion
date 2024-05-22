@@ -1,11 +1,13 @@
 
 import prismadb from "@/lib/prismadb";
+import { checkSubscription } from "@/lib/subscription";
 import { auth, currentUser } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 
 export const  PATCH =async (req:Request,{params}:{params:{companionId:string}})=>
 {
 try{
+const isPro = await checkSubscription();
 const body = await req.json();
 const user = await currentUser();
 const {src,name, description, instructions,seed,categoryId}=body;
@@ -16,6 +18,10 @@ if(!params.companionId)
 if(!user||!user.id||!user.firstName){
     return new NextResponse("Unauthorized", {status:401});
 }
+if(!isPro)
+    {
+        return new NextResponse("You are not a Pro Subscriber", {status:403})  
+    }
 const companionUnique = await prismadb.companion.findUnique({
     where:{id:params.companionId}
 })
